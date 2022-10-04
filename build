@@ -18,7 +18,6 @@ build_app(){
     ### build package
     echo
     echo "Building..."
-    rm dist/*
     python3 -m build
 }
 
@@ -34,7 +33,8 @@ test_app() {
 dist_app() {
     SOURCE=$1
     echo "Upload distribution package to PyPi from $SOURCE"
-    python3 -m twine upload dist/*
+    # throw away files if upload was succesful
+    python3 -m twine upload dist/* && rm dist/*
     echo ""
     echo "To install this package use:"
     echo "python3 -m pip install [this package name]"
