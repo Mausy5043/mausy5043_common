@@ -15,8 +15,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "mausy5043_common"
-version = "0.1.0"
+name = "mausy5043-common"
+version = "0.1.1"
 dependencies = [
     "numpy",
     "pandas",
@@ -34,8 +34,8 @@ classifiers = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/Mausy5043/mausy5043_common"
-"Bug Tracker" = "https://github.com/Mausy5043/mausy5043_common/issues"
+"Homepage" = "https://github.com/Mausy5043/mausy5043-common"
+"Bug Tracker" = "https://github.com/Mausy5043/mausy5043-common/issues"
 
 #  *  `name` is the distribution name of your package. This can be any name as long as it only contains letters,
 #     numbers, ., _ , and -. It also must not already be taken on PyPI.

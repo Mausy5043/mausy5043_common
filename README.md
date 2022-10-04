@@ -1,4 +1,4 @@
-# mausy5043_common
+# mausy5043-common
 
 # NOTE:
 ## user action required !!
