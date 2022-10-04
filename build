@@ -35,7 +35,7 @@ dist_app() {
     SOURCE=$1
     echo "Upload distribution package to PyPi from $SOURCE"
     # throw away files if upload was succesful
-    python3 -m twine upload dist/* && rm dist/*
+    python3 -m twine upload --repository mausy5043_common dist/* && rm dist/*
     echo ""
     echo "To install this package use:"
     echo "python3 -m pip install [this package name]"
