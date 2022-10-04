@@ -37,7 +37,7 @@ dist_app() {
 
 update_local_repo() {
     branch_name=$1
-    git fetch origin "${branch_name}" || { sleep 60; git fetch origin "${branch_name}" || exit 1 }
+    git fetch origin "${branch_name}" || { sleep 60; git fetch origin "${branch_name}" || exit 1; }
     git reset --hard "origin/${branch_name}" || exit 1
     git clean -f -d || exit 1
     git pull || exit 1
