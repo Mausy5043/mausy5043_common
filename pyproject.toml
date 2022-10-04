@@ -16,7 +16,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mausy5043-common"
-version = "0.13b"
+version = "0.1.3b"
 dependencies = [
     "numpy",
     "pandas",
