@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+
+HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
+
+pushd "${HERE}" >/dev/null || exit 1
+SRC=$1
+BRANCH="master"
+
+
+build_app(){
+    LOCATION=$1
+    echo "Building distribution package in $LOCATION"
+    ### install build-system
+    python3 -m pip install --upgrade build
+    python3 -m pip install --upgrade twine
+    ### build package
+    python3 -m build
+}
+
+test_app() {
+    SOURCE=$1
+    echo "Upload package to TestPyPi from $SOURCE"
+    python3 -m twine upload --repository testpypi dist/*
+    echo ""
+    echo "To test installing this package use:"
+    echo "python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps [this package name]"
+}
+
+dist_app() {
+    SOURCE=$1
+    echo "Upload distribution package to PyPi from $SOURCE"
+    python3 -m twine upload dist/*
+    echo ""
+    echo "To install this package use:"
+    echo "python3 -m pip install [this package name]"
+}
+
+update_local_repo() {
+    branch_name=$1
+    git fetch origin "${branch_name}" || sleep 60
+    git fetch origin "${branch_name}" || exit 1
+    git reset --hard "origin/${branch_name}" || exit 1
+    git clean -f -d || exit 1
+    git pull || exit 1
+}
+# check commandline parameters
+case $1 in
+    -b | --build)
+        build_app "${HERE}" || exit 1
+        ;;
+    -d | --dist)
+        dist_app "${HERE}" "${SRC}" || exit 1
+        ;;
+    -t | --test)
+        test_app "${SRC}" || exit 1
+        ;;
+    -u | --update)
+        update_local_repo "${BRANCH}" || exit 1
+        ;;
+    *)
+        echo "** Unknown option **"
+        echo
+        echo "Syntax:"
+        echo "build [-b|--build] | [-d|--dist] | [-t|--test] | [-u|--update]"
+        echo "Only the first option past is executed!"
+        exit 1
+        ;;
+esac
+
+popd >/dev/null || exit 1
