@@ -17,6 +17,10 @@ build-backend = "hatchling.build"
 [project]
 name = "mausy5043-common"
 version = "0.0.1"
+dependencies = [
+    "numpy",
+    "pandas",
+]
 authors = [
   { name="Mausy5043", email="mausy5043@example.com" },
 ]
