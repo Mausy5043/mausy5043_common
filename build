@@ -11,9 +11,13 @@ build_app(){
     LOCATION=$1
     echo "Building distribution package in $LOCATION"
     ### install build-system
-    python3 -m pip install --upgrade build
-    python3 -m pip install --upgrade twine
+    echo
+    echo "Checking build-system installation..."
+    python3 -m pip install --upgrade build | grep -v "already satisfied"
+    python3 -m pip install --upgrade twine | grep -v "already satisfied"
     ### build package
+    echo
+    echo "Building..."
     python3 -m build
 }
 
