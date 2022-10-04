@@ -8,6 +8,7 @@ import syslog
 
 def cat(fname):
     """Read a file (line-by-line) into a variable.
+
     Args:
         fname (str) : file to read from
 

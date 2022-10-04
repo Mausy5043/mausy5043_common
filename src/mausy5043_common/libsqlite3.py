@@ -10,7 +10,7 @@ import traceback
 
 import pandas as pd
 
-import fileops3 as mf
+import funfile as mf
 
 
 class SqlDatabase:
@@ -64,6 +64,7 @@ class SqlDatabase:
 
         Args:
             data (dict): data to be inserted
+
         Returns:
             None
         """

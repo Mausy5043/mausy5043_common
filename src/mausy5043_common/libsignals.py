@@ -6,7 +6,7 @@ import signal
 
 
 class GracefulKiller:
-    """Class to intercept kill signals."""
+    """A class to intercept kill signals."""
     kill_now = False
 
     def __init__(self):
