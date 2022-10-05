@@ -14,11 +14,11 @@ the default Python package that comes with it.
 `./build --update` **discards all changes to the local copy** of the repo and pulls the current state of the repo from GitHub.
 
 ## Functions provided
-`cat(filename)` : Read a file into a variable
-`syslog_trace(trace, logerr, out2console)` : Log messages to console and/or system log.
-`moisture(temperature, relative_humidity, pressure)` : Calculate the moisture content of air given T [degC], RH [%] and P [hPa].
-`wet_bulb_temperature(temperature, relative_humidity)` : Calculate the wet bulb temperature of the air given T [degC] and RH [%].
+`cat(filename)` : Read a file into a variable.   
+`syslog_trace(trace, logerr, out2console)` : Log messages to console and/or system log.   
+`moisture(temperature, relative_humidity, pressure)` : Calculate the moisture content of air given T [degC], RH [%] and P [hPa].   
+`wet_bulb_temperature(temperature, relative_humidity)` : Calculate the wet bulb temperature of the air given T [degC] and RH [%].   
 
 ## Classes provided
-`GracefulKiller` : A simple version of [this one](https://pypi.org/project/GracefulKiller/).
+`GracefulKiller` : A simple version of [this one](https://pypi.org/project/GracefulKiller/).   
 `SqlDatabase` : A class to interact with SQLite3 databases.
