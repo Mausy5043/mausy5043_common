@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
 HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
+CMD="${1}"
+BRANCH="$(git branch --show-current)"
+echo "$HERE is on branch: $BRANCH"
+echo
 
 pushd "${HERE}" >/dev/null || exit 1
-SRC=$2
-BRANCH="master"
-
 
 build_app(){
     LOCATION=$1
@@ -23,8 +24,8 @@ build_app(){
 }
 
 test_app() {
-    SOURCE=$1
-    echo "Upload package to TestPyPi from $SOURCE"
+    LOCATION=$1
+    echo "Upload package to TestPyPi from $LOCATION"
     python3 -m twine upload --repository testpypi dist/*
     echo ""
     echo "To test installing this package use:"
@@ -32,8 +33,8 @@ test_app() {
 }
 
 dist_app() {
-    SOURCE=$1
-    echo "Upload distribution package to PyPi from $SOURCE"
+    LOCATION=$1
+    echo "Upload distribution package to PyPi from $LOCATION"
     # throw away files if upload was succesful
     python3 -m twine upload --repository mausy5043_common dist/* && rm dist/*
     echo ""
@@ -48,26 +49,30 @@ update_local_repo() {
     git clean -f -d || exit 1
     git pull || exit 1
 }
+
 # check commandline parameters
-case $1 in
+case $CMD in
     -b | --build)
+        # build
         build_app "${HERE}" || exit 1
         ;;
     -d | --dist)
-        dist_app "${HERE}" "${SRC}" || exit 1
+        # distribute for production
+        dist_app "${HERE}" || exit 1
         ;;
     -t | --test)
-        test_app "${SRC}" || exit 1
+        # distribute for testing
+        test_app "${HERE}" || exit 1
         ;;
-    -u | --update)
+    --discard)
+        # reset local repo discarding local changes
         update_local_repo "${BRANCH}" || exit 1
         ;;
     *)
-        echo "** Unknown option **"
-        echo
         echo "Syntax:"
-        echo "build [-b|--build] | [-d|--dist] | [-t|--test] | [-u|--update]"
+        echo "build [-b|--build] | [-d|--dist] | [-t|--test] | [--discard]"
         echo "Only the first option past is executed!"
+        echo
         exit 1
         ;;
 esac
