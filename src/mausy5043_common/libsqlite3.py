@@ -10,7 +10,7 @@ import traceback
 
 import pandas as pd
 
-import funfile as mf
+from . import funfile as mf
 
 
 class SqlDatabase:
@@ -112,10 +112,10 @@ class SqlDatabase:
             except s3.IntegrityError:
                 # probably "sqlite3.IntegrityError: UNIQUE constraint failed".
                 # this can be passed
-                if method is 'ignore':
+                if method == 'ignore':
                     mf.syslog_trace("Duplicate entry. Not adding to database.", False, self.debug)
                     pass
-                if method is 'replace':
+                if method == 'replace':
                     element_time = element[f'{df_idx}']
                     sql_command = f'DELETE FROM {self.table} WHERE sample_time = "{element_time}";'
                     # mf.syslog_trace(f"{sql_command}", False, self.debug)
