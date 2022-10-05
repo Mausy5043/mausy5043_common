@@ -2,6 +2,8 @@
 
 """Provide a class to intercept signals."""
 
+# TODO: migrate to https://pypi.org/project/GracefulKiller/
+
 import signal
 
 
