@@ -6,7 +6,7 @@ import numpy as np
 
 
 def moisture(temperature, relative_humidity, pressure):
-    """Calculate moisture content of air given T, RH and P
+    """Calculate moisture content of air given T, RH and P.
 
     Args:
         temperature (float): in degC
