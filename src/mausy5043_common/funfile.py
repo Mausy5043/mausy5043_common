@@ -24,10 +24,12 @@ def cat(fname):
 
 def syslog_trace(trace, logerr, out2console):
     """Log a (multi-line) message to syslog.
+
     Args:
         trace (str): Text to send to log
         logerr (int): syslog errornumber
         out2console (bool): If True, will also print the 'trace' to the screen
+
     Returns:
         None
     """
