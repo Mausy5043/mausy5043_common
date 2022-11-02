@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+PACKAGE_NAME="mausy5043-common"
+
 HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
 CMD="${1}"
 BRANCH="$(git branch --show-current)"
@@ -29,7 +31,7 @@ test_app() {
     python3 -m twine upload --repository testpypi dist/*
     echo ""
     echo "To test installing this package use:"
-    echo "python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps [this package name]"
+    echo "python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps ${PACKAGE_NAME}"
 }
 
 dist_app() {
@@ -39,7 +41,7 @@ dist_app() {
     python3 -m twine upload --repository mausy5043_common dist/* && rm dist/*
     echo ""
     echo "To install this package use:"
-    echo "python3 -m pip install [this package name]"
+    echo "python3 -m pip install ${PACKAGE_NAME}"
 }
 
 update_local_repo() {
