@@ -6,20 +6,20 @@ import os
 import syslog
 
 
-def cat(fname):
+def cat(file_name):
     """Read a file (line-by-line) into a variable.
 
     Args:
-        fname (str) : file to read from
+        file_name (str) : file to read from
 
     Returns:
           (str) : file contents
     """
-    ret = ""
-    if os.path.isfile(fname):
-        with open(fname, 'r') as fin:
-            ret = fin.read().strip('\n')
-    return ret
+    contents = ""
+    if os.path.isfile(file_name):
+        with open(file_name, 'r', encoding="utf-8") as file_stream:
+            contents = file_stream.read().strip('\n')
+    return contents
 
 
 def syslog_trace(trace, logerr, out2console):
