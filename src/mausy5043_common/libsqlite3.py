@@ -114,7 +114,6 @@ class SqlDatabase:
                 # this can be passed
                 if method == 'ignore':
                     mf.syslog_trace("Duplicate entry. Not adding to database.", False, self.debug)
-                    pass
                 if method == 'replace':
                     element_time = element[f'{df_idx}']
                     sql_command = f'DELETE FROM {self.table} WHERE sample_time = "{element_time}";'
@@ -131,7 +130,6 @@ class SqlDatabase:
                         raise
                     df.to_sql(name=self.table, con=consql, if_exists='append', index=False)
                     mf.syslog_trace(f"Replaced : \n{df}", False, self.debug)
-                pass
             except s3.Error:
                 mf.syslog_trace("SQLite3 error when commiting to server.", syslog.LOG_ERR, self.debug)
                 mf.syslog_trace(traceback.format_exc(), syslog.LOG_ERR, self.debug)
