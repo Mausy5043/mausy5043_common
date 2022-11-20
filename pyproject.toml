@@ -11,7 +11,7 @@ dependencies = [
     "pandas",
 ]
 authors = [
-  { name="Mausy5043", email="mausy5043@example.com" },
+  { name="Mausy5043" },
 ]
 description = "Common python functions"
 readme = "README.md"
