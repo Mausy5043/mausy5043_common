@@ -25,7 +25,7 @@ class SqlDatabase:
         self.table = table
         self.sql_insert = insert
         self.sql_query = None
-        self.dataq = list()
+        self.dataq = []
         self.db_version = self._test_db_connection()
 
     def _test_db_connection(self):
