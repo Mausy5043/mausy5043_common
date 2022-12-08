@@ -22,7 +22,7 @@ def moisture(temperature, relative_humidity, pressure):
 
     es = 611.2 * np.exp(17.67 * (kelvin - 273.15) / (kelvin - 29.65))
     rvs = 0.622 * es / (pascal - es)
-    rv = relative_humidity / 100. * rvs
+    rv = relative_humidity / 100.0 * rvs
     qv = rv / (1 + rv)
     moistair = qv * rho * 1000  # g water per m3 air
     return np.array(moistair)
@@ -38,7 +38,13 @@ def wet_bulb_temperature(temperature, relative_humidity):
     Returns:
         float: wet bulb temperature in degC
     """
-    wbt = temperature * np.arctan(0.151977 * np.sqrt(relative_humidity + 8.313659)) + np.arctan(
-        temperature + relative_humidity) - np.arctan(relative_humidity - 1.676331) + 0.00391838 * np.power(
-        relative_humidity, 1.5) * np.arctan(0.023101 * relative_humidity) - 4.686035
+    wbt = (
+        temperature * np.arctan(0.151977 * np.sqrt(relative_humidity + 8.313659))
+        + np.arctan(temperature + relative_humidity)
+        - np.arctan(relative_humidity - 1.676331)
+        + 0.00391838
+        * np.power(relative_humidity, 1.5)
+        * np.arctan(0.023101 * relative_humidity)
+        - 4.686035
+    )
     return wbt

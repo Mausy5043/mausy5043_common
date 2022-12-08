@@ -17,8 +17,8 @@ def cat(file_name):
     """
     contents = ""
     if os.path.isfile(file_name):
-        with open(file_name, 'r', encoding="utf-8") as file_stream:
-            contents = file_stream.read().strip('\n')
+        with open(file_name, "r", encoding="utf-8") as file_stream:
+            contents = file_stream.read().strip("\n")
     return contents
 
 
@@ -33,7 +33,7 @@ def syslog_trace(trace, logerr, out2console):
     Returns:
         None
     """
-    log_lines = trace.split('\n')
+    log_lines = trace.split("\n")
     for line in log_lines:
         if line and logerr:
             syslog.syslog(logerr, line)

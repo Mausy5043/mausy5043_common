@@ -16,9 +16,16 @@ from . import funfile as mf
 class SqlDatabase:
     """A class to interact with SQLite3 databases."""
 
-    def __init__(self, database=".local/databasefile", schema=None, table=None, insert=None, debug=False):
+    def __init__(
+        self,
+        database=".local/databasefile",
+        schema=None,
+        table=None,
+        insert=None,
+        debug=False,
+    ):
         self.debug = debug
-        self.home = os.environ['HOME']
+        self.home = os.environ["HOME"]
         self.version = 3.0
         self.database = database
         self.schema = schema
@@ -38,7 +45,11 @@ class SqlDatabase:
         try:
             consql = s3.connect(self.database, timeout=9000)
         except s3.Error:
-            mf.syslog_trace("Unexpected SQLite3 error when connecting to server.", syslog.LOG_CRIT, self.debug)
+            mf.syslog_trace(
+                "Unexpected SQLite3 error when connecting to server.",
+                syslog.LOG_CRIT,
+                self.debug,
+            )
             mf.syslog_trace(traceback.format_exc(), syslog.LOG_CRIT, self.debug)
             if consql:  # attempt to close connection to sqlite3 server
                 consql.close()
@@ -51,10 +62,18 @@ class SqlDatabase:
             cursor.close()
             consql.commit()
             consql.close()
-            mf.syslog_trace(f"Attached to SQLite3 server: {versql}", syslog.LOG_INFO, self.debug)
-            mf.syslog_trace(f"Using DB file             : {self.database}", syslog.LOG_INFO, self.debug)
+            mf.syslog_trace(
+                f"Attached to SQLite3 server: {versql}", syslog.LOG_INFO, self.debug
+            )
+            mf.syslog_trace(
+                f"Using DB file             : {self.database}",
+                syslog.LOG_INFO,
+                self.debug,
+            )
         except s3.Error:
-            mf.syslog_trace("Unexpected SQLite3 error during test.", syslog.LOG_CRIT, self.debug)
+            mf.syslog_trace(
+                "Unexpected SQLite3 error during test.", syslog.LOG_CRIT, self.debug
+            )
             mf.syslog_trace(traceback.format_exc(), syslog.LOG_CRIT, self.debug)
             raise
         return versql
@@ -75,7 +94,7 @@ class SqlDatabase:
             mf.syslog_trace("Data must be a dictionary!", syslog.LOG_CRIT, self.debug)
             raise TypeError
 
-    def insert(self, method='ignore', index='sample_time'):
+    def insert(self, method="ignore", index="sample_time"):
         """Commit queued data to the database.
 
         Args:
@@ -95,7 +114,11 @@ class SqlDatabase:
         try:
             consql = s3.connect(self.database, timeout=9000)
         except s3.Error:
-            mf.syslog_trace("Unexpected SQLite3 error when connecting to server.", syslog.LOG_CRIT, self.debug)
+            mf.syslog_trace(
+                "Unexpected SQLite3 error when connecting to server.",
+                syslog.LOG_CRIT,
+                self.debug,
+            )
             mf.syslog_trace(traceback.format_exc(), syslog.LOG_CRIT, self.debug)
             if consql:  # attempt to close connection to sqlite3 server
                 consql.close()
@@ -104,18 +127,20 @@ class SqlDatabase:
 
         while self.dataq:
             element = self.dataq[0]
-            df_idx = index   # list(element.keys())[0]    # this should always be 'sample_time'
+            df_idx = index  # list(element.keys())[0]    # this should always be 'sample_time'
             df = pd.DataFrame(element, index=[df_idx])
             try:
-                df.to_sql(name=self.table, con=consql, if_exists='append', index=False)
+                df.to_sql(name=self.table, con=consql, if_exists="append", index=False)
                 mf.syslog_trace(f"Inserted : \n{df}", False, self.debug)
             except s3.IntegrityError:
                 # probably "sqlite3.IntegrityError: UNIQUE constraint failed".
                 # this can be passed
-                if method == 'ignore':
-                    mf.syslog_trace("Duplicate entry. Not adding to database.", False, self.debug)
-                if method == 'replace':
-                    element_time = element[f'{df_idx}']
+                if method == "ignore":
+                    mf.syslog_trace(
+                        "Duplicate entry. Not adding to database.", False, self.debug
+                    )
+                if method == "replace":
+                    element_time = element[f"{df_idx}"]
                     sql_command = f'DELETE FROM {self.table} WHERE sample_time = "{element_time}";'
                     # mf.syslog_trace(f"{sql_command}", False, self.debug)
                     cursor = consql.cursor()
@@ -125,13 +150,25 @@ class SqlDatabase:
                         cursor.close()
                         consql.commit()
                     except s3.Error:
-                        mf.syslog_trace("SQLite3 error when commiting to server.", syslog.LOG_ERR, self.debug)
-                        mf.syslog_trace(traceback.format_exc(), syslog.LOG_ERR, self.debug)
+                        mf.syslog_trace(
+                            "SQLite3 error when commiting to server.",
+                            syslog.LOG_ERR,
+                            self.debug,
+                        )
+                        mf.syslog_trace(
+                            traceback.format_exc(), syslog.LOG_ERR, self.debug
+                        )
                         raise
-                    df.to_sql(name=self.table, con=consql, if_exists='append', index=False)
+                    df.to_sql(
+                        name=self.table, con=consql, if_exists="append", index=False
+                    )
                     mf.syslog_trace(f"Replaced : \n{df}", False, self.debug)
             except s3.Error:
-                mf.syslog_trace("SQLite3 error when commiting to server.", syslog.LOG_ERR, self.debug)
+                mf.syslog_trace(
+                    "SQLite3 error when commiting to server.",
+                    syslog.LOG_ERR,
+                    self.debug,
+                )
                 mf.syslog_trace(traceback.format_exc(), syslog.LOG_ERR, self.debug)
                 raise
             except Exception:
@@ -153,7 +190,11 @@ class SqlDatabase:
         try:
             consql = s3.connect(self.database, timeout=9000)
         except s3.Error:
-            mf.syslog_trace("Unexpected SQLite3 error when connecting to server.", syslog.LOG_CRIT, self.debug)
+            mf.syslog_trace(
+                "Unexpected SQLite3 error when connecting to server.",
+                syslog.LOG_CRIT,
+                self.debug,
+            )
             mf.syslog_trace(traceback.format_exc(), syslog.LOG_CRIT, self.debug)
             if consql:  # attempt to close connection to sqlite3 server
                 consql.close()
@@ -167,11 +208,16 @@ class SqlDatabase:
             cursor.close()
             consql.commit()
             consql.close()
-            mf.syslog_trace(f"Latest datapoint in {self.table}: "
-                            f"{max_epoch[0]} = {time.strftime('%Y-%m-%d %H:%M:%S', human_epoch)}",
-                            False, self.debug)
+            mf.syslog_trace(
+                f"Latest datapoint in {self.table}: "
+                f"{max_epoch[0]} = {time.strftime('%Y-%m-%d %H:%M:%S', human_epoch)}",
+                False,
+                self.debug,
+            )
         except s3.Error:
-            mf.syslog_trace("Unexpected SQLite3 error during test.", syslog.LOG_CRIT, self.debug)
+            mf.syslog_trace(
+                "Unexpected SQLite3 error during test.", syslog.LOG_CRIT, self.debug
+            )
             mf.syslog_trace(traceback.format_exc(), syslog.LOG_CRIT, self.debug)
             raise
-        return time.strftime('%Y-%m-%d %H:%M:%S', human_epoch)
+        return time.strftime("%Y-%m-%d %H:%M:%S", human_epoch)
