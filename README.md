@@ -5,18 +5,20 @@
 [![PyPI downloads](https://img.shields.io/pypi/dm/mausy5043-common.svg)](https://pypistats.org/packages/mausy5043-common)
 [![Code style: Black](https://img.shields.io/badge/code%20style-Black-000000.svg)](https://github.com/psf/black)
 
-Provides various Python3 functions and classes for personal use.
+This is a Python3 library of functions and classes, mainly for personal use.
 
-## NOTE:
-### user action required !!
+## Requirements
+
+**NOTE: user action required !!**  
 Before trying to use the SQLITE3 functions in this package make sure you have installed the sqlite3 server/client and 
 the default Python package that comes with it.
 
-## Available commands for package building
-`./build --build|-b` builds the distribution files   
-`./build --dist|-d` uploads the distribution files to PyPi   
-`./build --test|-t` uploads the dictribution files to TestPyPi   
-`./build --discard` **discards all changes to the local copy** of the repo and pulls the current state of the repo from GitHub.
+## Installation
+
+```
+pip install mausy5043-common
+```
+
 
 ## Functions provided
 `cat(filename)` : Read a file into a variable.   
