@@ -72,7 +72,9 @@ class SqlDatabase:
             )
         except s3.Error as her:
             mf.syslog_trace(
-                f"Unexpected SQLite3 error of type {type(her).__name__} during test.", syslog.LOG_CRIT, self.debug
+                f"Unexpected SQLite3 error of type {type(her).__name__} during test.",
+                syslog.LOG_CRIT,
+                self.debug,
             )
             mf.syslog_trace(traceback.format_exc(), syslog.LOG_CRIT, self.debug)
             raise
@@ -219,7 +221,9 @@ class SqlDatabase:
             )
         except s3.Error as her:
             mf.syslog_trace(
-                f"Unexpected SQLite3 error of type {type(her).__name__} during test.", syslog.LOG_CRIT, self.debug
+                f"Unexpected SQLite3 error of type {type(her).__name__} during test.",
+                syslog.LOG_CRIT,
+                self.debug,
             )
             mf.syslog_trace(traceback.format_exc(), syslog.LOG_CRIT, self.debug)
             raise
