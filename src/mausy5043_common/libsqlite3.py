@@ -101,9 +101,9 @@ class SqlDatabase:
 
         Args:
             method (str):   how to handle duplicates in the database.
-                            Possible options are 'ignore' (database will not
-                            be changed) or 'replace' (existing data will be removed
-                            and new data inserted).
+                            Possible options are:
+                            'ignore' (database will not be changed) or
+                            'replace' (existing data will be removed and new data inserted).
             index (str):    name of the field to be used as the index.
 
         Returns:
@@ -116,7 +116,7 @@ class SqlDatabase:
         """
         consql = None
         if not self.insert:
-            raise ValueError("No INSERT instruction provided")
+            raise ValueError("No instruction provided")
 
         try:
             consql = s3.connect(self.database, timeout=9000)
@@ -138,7 +138,7 @@ class SqlDatabase:
             df = pd.DataFrame(element, index=[df_idx])
             try:
                 df.to_sql(name=self.table, con=consql, if_exists="append", index=False)
-                mf.syslog_trace(f"Inserted : \n{df}", False, self.debug)
+                mf.syslog_trace(f"Inserted : \n{df}\n", False, self.debug)
             except s3.IntegrityError:
                 # probably "sqlite3.IntegrityError: UNIQUE constraint failed".
                 # this can be passed
@@ -148,10 +148,7 @@ class SqlDatabase:
                     )
                 if method == "replace":
                     element_time = element[f"{df_idx}"]
-                    sql_command = (
-                        f'DELETE FROM {self.table} WHERE sample_time = "{element_time}";'
-                    )
-                    # mf.syslog_trace(f"{sql_command}", False, self.debug)
+                    sql_command = f'DELETE FROM {self.table} WHERE {df_idx} = "{element_time}";'
                     cursor = consql.cursor()
                     try:
                         cursor.execute(sql_command)
@@ -167,7 +164,7 @@ class SqlDatabase:
                         mf.syslog_trace(traceback.format_exc(), syslog.LOG_ERR, self.debug)
                         raise
                     df.to_sql(name=self.table, con=consql, if_exists="append", index=False)
-                    mf.syslog_trace(f"Replaced : \n{df}", False, self.debug)
+                    mf.syslog_trace(f"Replaced : \n{df}\n", False, self.debug)
             except s3.Error as her:
                 mf.syslog_trace(
                     f"SQLite3 error of type {type(her).__name__} when commiting to server.",
@@ -177,7 +174,11 @@ class SqlDatabase:
                 mf.syslog_trace(traceback.format_exc(), syslog.LOG_ERR, self.debug)
                 raise
             except Exception as her:
-                mf.syslog_trace(f"Unexpected error of type {type(her).__name__} !", syslog.LOG_ERR, self.debug)
+                mf.syslog_trace(
+                    f"Unexpected error of type {type(her).__name__} !",
+                    syslog.LOG_ERR,
+                    self.debug,
+                )
                 mf.syslog_trace(traceback.format_exc(), syslog.LOG_ERR, self.debug)
                 raise
             self.dataq.pop(0)
