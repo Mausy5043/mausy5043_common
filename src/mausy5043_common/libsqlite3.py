@@ -46,6 +46,7 @@ class SqlDatabase:
             consql = s3.connect(self.database, timeout=9000)
         except s3.Error as her:
             mf.syslog_trace(
+                # pylint: disable-next=C0301
                 f"Unexpected SQLite3 error of type {type(her).__name__} when connecting to server.",
                 syslog.LOG_CRIT,
                 self.debug,
@@ -122,6 +123,7 @@ class SqlDatabase:
             consql = s3.connect(self.database, timeout=9000)
         except s3.Error as her:
             mf.syslog_trace(
+                # pylint: disable-next=C0301
                 f"Unexpected SQLite3 error of type {type(her).__name__} when connecting to server.",
                 syslog.LOG_CRIT,
                 self.debug,
@@ -157,6 +159,7 @@ class SqlDatabase:
                         consql.commit()
                     except s3.Error as her:
                         mf.syslog_trace(
+                            # pylint: disable-next=C0301
                             f"SQLite3 error of type {type(her).__name__} when commiting to server.",
                             syslog.LOG_ERR,
                             self.debug,
@@ -197,6 +200,7 @@ class SqlDatabase:
             consql = s3.connect(self.database, timeout=9000)
         except s3.Error as her:
             mf.syslog_trace(
+                # pylint: disable-next=C0301
                 f"Unexpected SQLite3 error of type {type(her).__name__} when connecting to server.",
                 syslog.LOG_CRIT,
                 self.debug,
