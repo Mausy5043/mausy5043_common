@@ -18,7 +18,7 @@ class SqlDatabase:
 
     def __init__(
         self,
-        database=".local/databasefile",
+        database=".local/databasefile.sqlite3",
         schema=None,
         table=None,
         insert=None,
