@@ -98,8 +98,10 @@ class SqlDatabase:
         """Commit queued data to the database.
 
         Args:
-            method (str):   how to handle duplicates in the database. Possible options are 'ignore' (database will not
-                            be changed) or 'replace' (existing data will be removed and new data inserted).
+            method (str):   how to handle duplicates in the database.
+                            Possible options are 'ignore' (database will not
+                            be changed) or 'replace' (existing data will be removed
+                            and new data inserted).
             index (str):    name of the field to be used as the index.
 
         Returns:
