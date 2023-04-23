@@ -157,6 +157,10 @@ class SqlDatabase:
                         cursor.fetchone()
                         cursor.close()
                         consql.commit()
+                    except s3.IntegrityError:
+                        pass
+                        # probably "sqlite3.IntegrityError: UNIQUE constraint failed".
+                        # this can be passed
                     except s3.Error as her:
                         mf.syslog_trace(
                             # pylint: disable-next=C0301
