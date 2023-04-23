@@ -13,10 +13,10 @@ Before trying to use the SQLITE3 functions in this package make sure you have in
 the default Python package that comes with it.
 
 ## Available commands for package building
-`./build --build` builds the distribution files   
-`./build --dist` uploads the distribution files to PyPi   
-`./build --test` uploads the dictribution files to TestPyPi   
-`./build --update` **discards all changes to the local copy** of the repo and pulls the current state of the repo from GitHub.
+`./build --build|-b` builds the distribution files   
+`./build --dist|-d` uploads the distribution files to PyPi   
+`./build --test|-t` uploads the dictribution files to TestPyPi   
+`./build --discard` **discards all changes to the local copy** of the repo and pulls the current state of the repo from GitHub.
 
 ## Functions provided
 `cat(filename)` : Read a file into a variable.   
