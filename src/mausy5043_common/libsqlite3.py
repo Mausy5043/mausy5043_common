@@ -44,9 +44,9 @@ class SqlDatabase:
         consql = None
         try:
             consql = s3.connect(self.database, timeout=9000)
-        except s3.Error:
+        except s3.Error as her:
             mf.syslog_trace(
-                "Unexpected SQLite3 error when connecting to server.",
+                f"Unexpected SQLite3 error of type {type(her).__name__} when connecting to server.",
                 syslog.LOG_CRIT,
                 self.debug,
             )
@@ -70,9 +70,9 @@ class SqlDatabase:
                 syslog.LOG_INFO,
                 self.debug,
             )
-        except s3.Error:
+        except s3.Error as her:
             mf.syslog_trace(
-                "Unexpected SQLite3 error during test.", syslog.LOG_CRIT, self.debug
+                f"Unexpected SQLite3 error of type {type(her).__name__} during test.", syslog.LOG_CRIT, self.debug
             )
             mf.syslog_trace(traceback.format_exc(), syslog.LOG_CRIT, self.debug)
             raise
@@ -108,16 +108,19 @@ class SqlDatabase:
             None
 
         Raises:
-            sqlite3.Error : when commit fails serverside
-            Exception : to catch unknown errors during the exchange
+            ValueError: if <sql_insert> is not defined
+            sqlite3.Error: when commit fails serverside
+            Exception: to catch unknown errors during the exchange
         """
         consql = None
+        if not self.insert:
+            raise ValueError("No INSERT instruction provided")
 
         try:
             consql = s3.connect(self.database, timeout=9000)
-        except s3.Error:
+        except s3.Error as her:
             mf.syslog_trace(
-                "Unexpected SQLite3 error when connecting to server.",
+                f"Unexpected SQLite3 error of type {type(her).__name__} when connecting to server.",
                 syslog.LOG_CRIT,
                 self.debug,
             )
@@ -153,9 +156,9 @@ class SqlDatabase:
                         cursor.fetchone()
                         cursor.close()
                         consql.commit()
-                    except s3.Error:
+                    except s3.Error as her:
                         mf.syslog_trace(
-                            "SQLite3 error when commiting to server.",
+                            f"SQLite3 error of type {type(her).__name__} when commiting to server.",
                             syslog.LOG_ERR,
                             self.debug,
                         )
@@ -163,16 +166,16 @@ class SqlDatabase:
                         raise
                     df.to_sql(name=self.table, con=consql, if_exists="append", index=False)
                     mf.syslog_trace(f"Replaced : \n{df}", False, self.debug)
-            except s3.Error:
+            except s3.Error as her:
                 mf.syslog_trace(
-                    "SQLite3 error when commiting to server.",
+                    f"SQLite3 error of type {type(her).__name__} when commiting to server.",
                     syslog.LOG_ERR,
                     self.debug,
                 )
                 mf.syslog_trace(traceback.format_exc(), syslog.LOG_ERR, self.debug)
                 raise
-            except Exception:
-                mf.syslog_trace("Unexpected error!", syslog.LOG_ERR, self.debug)
+            except Exception as her:
+                mf.syslog_trace(f"Unexpected error of type {type(her).__name__} !", syslog.LOG_ERR, self.debug)
                 mf.syslog_trace(traceback.format_exc(), syslog.LOG_ERR, self.debug)
                 raise
             self.dataq.pop(0)
@@ -189,9 +192,9 @@ class SqlDatabase:
         consql = None
         try:
             consql = s3.connect(self.database, timeout=9000)
-        except s3.Error:
+        except s3.Error as her:
             mf.syslog_trace(
-                "Unexpected SQLite3 error when connecting to server.",
+                f"Unexpected SQLite3 error of type {type(her).__name__} when connecting to server.",
                 syslog.LOG_CRIT,
                 self.debug,
             )
@@ -214,9 +217,9 @@ class SqlDatabase:
                 False,
                 self.debug,
             )
-        except s3.Error:
+        except s3.Error as her:
             mf.syslog_trace(
-                "Unexpected SQLite3 error during test.", syslog.LOG_CRIT, self.debug
+                f"Unexpected SQLite3 error of type {type(her).__name__} during test.", syslog.LOG_CRIT, self.debug
             )
             mf.syslog_trace(traceback.format_exc(), syslog.LOG_CRIT, self.debug)
             raise
