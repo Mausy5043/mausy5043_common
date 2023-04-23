@@ -141,7 +141,9 @@ class SqlDatabase:
                     )
                 if method == "replace":
                     element_time = element[f"{df_idx}"]
-                    sql_command = f'DELETE FROM {self.table} WHERE sample_time = "{element_time}";'
+                    sql_command = (
+                        f'DELETE FROM {self.table} WHERE sample_time = "{element_time}";'
+                    )
                     # mf.syslog_trace(f"{sql_command}", False, self.debug)
                     cursor = consql.cursor()
                     try:
@@ -155,13 +157,9 @@ class SqlDatabase:
                             syslog.LOG_ERR,
                             self.debug,
                         )
-                        mf.syslog_trace(
-                            traceback.format_exc(), syslog.LOG_ERR, self.debug
-                        )
+                        mf.syslog_trace(traceback.format_exc(), syslog.LOG_ERR, self.debug)
                         raise
-                    df.to_sql(
-                        name=self.table, con=consql, if_exists="append", index=False
-                    )
+                    df.to_sql(name=self.table, con=consql, if_exists="append", index=False)
                     mf.syslog_trace(f"Replaced : \n{df}", False, self.debug)
             except s3.Error:
                 mf.syslog_trace(
