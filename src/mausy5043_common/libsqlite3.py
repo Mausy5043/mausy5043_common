@@ -67,7 +67,7 @@ class SqlDatabase:  # pylint: disable=R0902
                 f"Attached to SQLite3 server: {versql}", syslog.LOG_INFO, self.debug
             )
             mf.syslog_trace(
-                f"Using DB file             : {self.database}@{self.table}",
+                f"Using DB file             : {self.table}@{self.database}",
                 syslog.LOG_INFO,
                 self.debug,
             )
