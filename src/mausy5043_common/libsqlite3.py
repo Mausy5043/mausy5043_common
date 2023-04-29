@@ -13,7 +13,7 @@ import pandas as pd
 from . import funfile as mf
 
 
-class SqlDatabase:
+class SqlDatabase:  # pylint: disable=R0902
     """A class to interact with SQLite3 databases."""
 
     def __init__(

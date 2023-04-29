@@ -7,7 +7,7 @@
 import signal
 
 
-class GracefulKiller:
+class GracefulKiller:  # pylint: disable=R0903
     """A class to intercept kill signals."""
 
     kill_now = False
@@ -17,7 +17,7 @@ class GracefulKiller:
         signal.signal(signal.SIGINT, self.exit_gracefully)
         signal.signal(signal.SIGTERM, self.exit_gracefully)
 
-    def exit_gracefully(self, signum, frame):  # noqa
+    def exit_gracefully(self, signum, frame):  # pylint: disable=W0613
         """Intercept signals and set the state appropriately.
 
         Args:
