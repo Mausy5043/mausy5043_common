@@ -67,7 +67,7 @@ class SqlDatabase:
                 f"Attached to SQLite3 server: {versql}", syslog.LOG_INFO, self.debug
             )
             mf.syslog_trace(
-                f"Using DB file             : {self.database}",
+                f"Using DB file             : {self.database}@{self.table}",
                 syslog.LOG_INFO,
                 self.debug,
             )
