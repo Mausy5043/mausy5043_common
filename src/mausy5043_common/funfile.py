@@ -22,8 +22,10 @@ def cat(file_name):
     return contents
 
 
-def syslog_trace(trace, logerr, out2console):
+def syslog_trace(trace, logerr, out2console=False):
     """Log a (multi-line) message to syslog.
+    Initialise with a call to
+    syslog.openlog(ident=<string>, facility=<syslog.facility>)
 
     Args:
         trace (str): Text to send to log
