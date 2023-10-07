@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 [project]
 name = "mausy5043-common"
 description = "Common python functions"
-version = "1.4.4"
+version = "1.4.5"
 dependencies = [
     "numpy",
     "pandas",
