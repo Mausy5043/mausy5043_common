@@ -3,7 +3,6 @@
 [![PyPI version](https://img.shields.io/pypi/v/mausy5043-common.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/mausy5043-common)
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/mausy5043-common.svg?logo=python&logoColor=FFE873)](https://pypi.org/project/mausy5043-common)
 [![PyPI downloads](https://img.shields.io/pypi/dm/mausy5043-common.svg)](https://pypistats.org/packages/mausy5043-common)
-[![Upload Python Package](https://github.com/Mausy5043/mausy5043-common/actions/workflows/release.yml/badge.svg)](https://github.com/Mausy5043/mausy5043-common/actions/workflows/release.yml)
 [![Code style: Black](https://img.shields.io/badge/code%20style-Black-000000.svg)](https://github.com/psf/black)
 
 This is a Python3 library of functions and classes, mainly for personal use.
