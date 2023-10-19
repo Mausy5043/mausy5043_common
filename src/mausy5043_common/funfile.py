@@ -24,6 +24,7 @@ def cat(file_name):
 
 def syslog_trace(trace, logerr, out2console=False):
     """Log a (multi-line) message to syslog.
+
     Initialise with a call to
     syslog.openlog(ident=<string>, facility=<syslog.facility>)
 

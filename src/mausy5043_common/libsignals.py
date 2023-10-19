@@ -13,7 +13,7 @@ class GracefulKiller:  # pylint: disable=R0903
     kill_now = False
 
     def __init__(self):
-        """Set-up signals to intercept"""
+        """Set-up signals to intercept."""
         signal.signal(signal.SIGINT, self.exit_gracefully)
         signal.signal(signal.SIGTERM, self.exit_gracefully)
 

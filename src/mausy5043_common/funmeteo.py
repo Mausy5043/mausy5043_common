@@ -42,9 +42,7 @@ def wet_bulb_temperature(temperature: float, relative_humidity: float) -> float:
         temperature * np.arctan(0.151977 * np.sqrt(relative_humidity + 8.313659))
         + np.arctan(temperature + relative_humidity)
         - np.arctan(relative_humidity - 1.676331)
-        + 0.00391838
-        * np.power(relative_humidity, 1.5)
-        * np.arctan(0.023101 * relative_humidity)
+        + 0.00391838 * np.power(relative_humidity, 1.5) * np.arctan(0.023101 * relative_humidity)
         - 4.686035
     )
     return wbt

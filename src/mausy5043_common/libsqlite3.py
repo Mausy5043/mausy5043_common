@@ -24,6 +24,7 @@ class SqlDatabase:  # pylint: disable=R0902
         insert=None,
         debug=False,
     ):
+        """Initialise database queue object."""
         self.debug = debug
         self.home = os.environ["HOME"]
         self.version = 3.0
@@ -63,9 +64,7 @@ class SqlDatabase:  # pylint: disable=R0902
             cursor.close()
             consql.commit()
             consql.close()
-            mf.syslog_trace(
-                f"Attached to SQLite3 server: {versql}", syslog.LOG_INFO, self.debug
-            )
+            mf.syslog_trace(f"Attached to SQLite3 server: {versql}", syslog.LOG_INFO, self.debug)
             mf.syslog_trace(
                 f"Using DB file             : {self.table}@{self.database}",
                 syslog.LOG_INFO,
@@ -145,9 +144,7 @@ class SqlDatabase:  # pylint: disable=R0902
                 # probably "sqlite3.IntegrityError: UNIQUE constraint failed".
                 # this can be passed
                 if method == "ignore":
-                    mf.syslog_trace(
-                        "Duplicate entry. Not adding to database.", False, self.debug
-                    )
+                    mf.syslog_trace("Duplicate entry. Not adding to database.", False, self.debug)
                 if method == "replace":
                     element_time = element[f"{df_idx}"]
                     sql_command = f'DELETE FROM {self.table} WHERE {df_idx} = "{element_time}";'
@@ -193,8 +190,7 @@ class SqlDatabase:  # pylint: disable=R0902
         consql.close()
 
     def latest_datapoint(self):
-        """
-        Look up last entry in the database table.
+        """Look up last entry in the database table.
 
         Returns:
             date and time of the youngest entry in the table
