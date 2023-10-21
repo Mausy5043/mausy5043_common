@@ -48,7 +48,7 @@ class SqlDatabase:  # pylint: disable=R0902
         except s3.Error as her:
             mf.syslog_trace(
                 # pylint: disable-next=C0301
-                f"Unexpected SQLite3 error of type {type(her).__name__} when connecting to server.",
+                f"Unexpected error of type {type(her).__name__} when connecting to server.",
                 syslog.LOG_CRIT,
                 self.debug,
             )
@@ -123,7 +123,7 @@ class SqlDatabase:  # pylint: disable=R0902
         except s3.Error as her:
             mf.syslog_trace(
                 # pylint: disable-next=C0301
-                f"Unexpected SQLite3 error of type {type(her).__name__} when connecting to server.",
+                f"Unexpected error of type {type(her).__name__} when connecting to server.",
                 syslog.LOG_CRIT,
                 self.debug,
             )
@@ -161,7 +161,7 @@ class SqlDatabase:  # pylint: disable=R0902
                     except s3.Error as her:
                         mf.syslog_trace(
                             # pylint: disable-next=C0301
-                            f"SQLite3 error of type {type(her).__name__} when commiting to server.",
+                            f"Error of type {type(her).__name__} when commiting to server.",
                             syslog.LOG_ERR,
                             self.debug,
                         )
@@ -201,7 +201,7 @@ class SqlDatabase:  # pylint: disable=R0902
         except s3.Error as her:
             mf.syslog_trace(
                 # pylint: disable-next=C0301
-                f"Unexpected SQLite3 error of type {type(her).__name__} when connecting to server.",
+                f"Unexpected error of type {type(her).__name__} when connecting to server.",
                 syslog.LOG_CRIT,
                 self.debug,
             )
