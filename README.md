@@ -13,10 +13,12 @@ This is a Python3 library of functions and classes, mainly for personal use.
 Before trying to use the SQLITE3 functions in this package make sure you have installed the sqlite3 server/client and 
 the default Python package that comes with it.
 
+Development of this package is done in Python 3.9. The package is considered forwards compatible at least upto Python 3.11 and probably also beyond. Backwards compatibility is not guaranteed; if it works on Python 3.7 or before consider yourself lucky. [Python versions that are end-of-life](https://devguide.python.org/versions/) are not supported.
+
 ## Installation
 
 ```
-pip install mausy5043-common
+python3 -m pip install mausy5043-common
 ```
 
 
