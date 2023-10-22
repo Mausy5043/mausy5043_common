@@ -36,7 +36,7 @@ def wet_bulb_temperature(temperature: float, relative_humidity: float) -> float:
         relative_humidity: in %
 
     Returns:
-        wet bulb temperature in degC
+        Wet bulb temperature in degC
     """
     wbt = (
         temperature * np.arctan(0.151977 * np.sqrt(relative_humidity + 8.313659))
