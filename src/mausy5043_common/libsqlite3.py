@@ -96,7 +96,7 @@ class SqlDatabase:  # pylint: disable=R0902
             mf.syslog_trace("Data must be a dictionary!", syslog.LOG_CRIT, self.debug)
             raise TypeError
 
-    def insert(self, method="ignore", index="sample_time"):
+    def insert(self, method="ignore", index="sample_time", aggregation="raw"):
         """Commit queued data to the database.
 
         Args:
@@ -105,6 +105,10 @@ class SqlDatabase:  # pylint: disable=R0902
                             'ignore' (database will not be changed) or
                             'replace' (existing data will be removed and new data inserted).
             index (str):    name of the field to be used as the index.
+            aggregation (str): specifies how to treat the data before inserting.
+                               "raw" will insert the data as is
+                               "avg" will insert averaged data. The index is not averaged,
+                               instead the last value is used.
 
         Returns:
             None
