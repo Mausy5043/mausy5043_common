@@ -114,7 +114,7 @@ class SqlDatabase:  # pylint: disable=R0902
             None
 
         Raises:
-            ValueError: if <sql_insert> is not defined
+            ValueError: if <self.insert> is empty
             sqlite3.Error: when commit fails serverside
             Exception: to catch unknown errors during the exchange
         """
