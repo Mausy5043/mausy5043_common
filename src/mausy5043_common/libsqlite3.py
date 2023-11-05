@@ -21,9 +21,9 @@ class SqlDatabase:  # pylint: disable=R0902
         database: str,
         schema: str,
         table: str,
-        insert: str = "",
+        insert: str,
         debug: bool = False,
-    ):
+    ) -> None:
         """Initialise database queue object."""
 
         self.debug: bool = debug
@@ -116,7 +116,7 @@ class SqlDatabase:  # pylint: disable=R0902
             Exception: to catch unknown errors during the exchange
         """
         consql = None
-        if not self.insert:
+        if self.sql_insert == "":
             raise ValueError("No instruction provided")
 
         try:
