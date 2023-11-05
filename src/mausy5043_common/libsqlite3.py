@@ -18,13 +18,14 @@ class SqlDatabase:  # pylint: disable=R0902
 
     def __init__(
         self,
-        database=".local/databasefile.sqlite3",
-        schema=None,
-        table=None,
-        insert=None,
-        debug=False,
+        database: str,
+        schema: str,
+        table: str,
+        insert: str = "",
+        debug: bool = False,
     ):
         """Initialise database queue object."""
+
         self.debug: bool = debug
         self.home: str = os.environ["HOME"]
         self.version: float = 3.0
@@ -32,7 +33,7 @@ class SqlDatabase:  # pylint: disable=R0902
         self.schema: str = schema
         self.table: str = table
         self.sql_insert: str = insert
-        self.sql_query: str = None
+        self.sql_query: str = ""
         self.dataq: list[dict] = []
         self.db_version: str = self._test_db_connection()
 
@@ -96,7 +97,7 @@ class SqlDatabase:  # pylint: disable=R0902
             mf.syslog_trace("Data must be a dictionary!", syslog.LOG_CRIT, self.debug)
             raise TypeError
 
-    def insert(self, method="ignore", index="sample_time", aggregation="raw"):
+    def insert(self, method="ignore", index="sample_time", aggregation="raw") -> None:
         """Commit queued data to the database.
 
         Args:
