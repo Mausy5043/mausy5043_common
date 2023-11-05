@@ -6,7 +6,8 @@ build-backend = "hatchling.build"
 [project]
 name = "mausy5043-common"
 description = "Common python functions"
-version = "1.4.10"
+# version = "1.4.10"  # latest production version
+version = "1.5.2" # latest test version
 dependencies = [
     "numpy",
     "pandas",
@@ -30,3 +31,6 @@ classifiers = [
 [project.urls]
 "Homepage" = "https://github.com/Mausy5043/mausy5043-common"
 "Bug Tracker" = "https://github.com/Mausy5043/mausy5043-common/issues"
+
+[tool.setuptools.package-data]
+"mausy5043-common" = ["py.typed"]

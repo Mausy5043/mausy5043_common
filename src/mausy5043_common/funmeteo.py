@@ -5,7 +5,7 @@
 import numpy as np
 
 
-def moisture(temperature: float, relative_humidity: float, pressure: float):
+def moisture(temperature: float, relative_humidity: float, pressure: float) -> np.ndarray:
     """Calculate moisture content of air given T, RH and P.
 
     Args:
@@ -16,9 +16,9 @@ def moisture(temperature: float, relative_humidity: float, pressure: float):
     Returns:
         np.array: moisture content in kg/m3
     """
-    kelvin = temperature + 273.15
-    pascal = pressure * 100
-    rho = (287.04 * kelvin) / pascal
+    kelvin: float = temperature + 273.15
+    pascal: float = pressure * 100
+    rho: float = (287.04 * kelvin) / pascal
 
     es = 611.2 * np.exp(17.67 * (kelvin - 273.15) / (kelvin - 29.65))
     rvs = 0.622 * es / (pascal - es)
@@ -38,7 +38,7 @@ def wet_bulb_temperature(temperature: float, relative_humidity: float) -> float:
     Returns:
         Wet bulb temperature in degC
     """
-    wbt = (
+    wbt: float = (
         temperature * np.arctan(0.151977 * np.sqrt(relative_humidity + 8.313659))
         + np.arctan(temperature + relative_humidity)
         - np.arctan(relative_humidity - 1.676331)

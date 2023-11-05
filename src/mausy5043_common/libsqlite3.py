@@ -25,22 +25,22 @@ class SqlDatabase:  # pylint: disable=R0902
         debug=False,
     ):
         """Initialise database queue object."""
-        self.debug = debug
-        self.home = os.environ["HOME"]
-        self.version = 3.0
-        self.database = database
-        self.schema = schema
-        self.table = table
-        self.sql_insert = insert
-        self.sql_query = None
-        self.dataq = []
-        self.db_version = self._test_db_connection()
+        self.debug: bool = debug
+        self.home: str = os.environ["HOME"]
+        self.version: float = 3.0
+        self.database: str = database
+        self.schema: str = schema
+        self.table: str = table
+        self.sql_insert: str = insert
+        self.sql_query: str = None
+        self.dataq: list[dict] = []
+        self.db_version: str = self._test_db_connection()
 
-    def _test_db_connection(self):
+    def _test_db_connection(self) -> str:
         """Print the version of the database.
 
         Returns:
-            None
+            version of the database
         """
         consql = None
         try:
@@ -80,7 +80,7 @@ class SqlDatabase:  # pylint: disable=R0902
             raise
         return versql
 
-    def queue(self, data):
+    def queue(self, data: dict) -> None:
         """Append data to the queue for insertion.
 
         Args:
@@ -96,7 +96,7 @@ class SqlDatabase:  # pylint: disable=R0902
             mf.syslog_trace("Data must be a dictionary!", syslog.LOG_CRIT, self.debug)
             raise TypeError
 
-    def insert(self, method="ignore", index="sample_time"):
+    def insert(self, method="ignore", index="sample_time", aggregation="raw"):
         """Commit queued data to the database.
 
         Args:
@@ -105,12 +105,16 @@ class SqlDatabase:  # pylint: disable=R0902
                             'ignore' (database will not be changed) or
                             'replace' (existing data will be removed and new data inserted).
             index (str):    name of the field to be used as the index.
+            aggregation (str): specifies how to treat the data before inserting.
+                               "raw" will insert the data as is
+                               "avg" will insert averaged data. The index is not averaged,
+                               instead the last value is used.
 
         Returns:
             None
 
         Raises:
-            ValueError: if <sql_insert> is not defined
+            ValueError: if <self.insert> is empty
             sqlite3.Error: when commit fails serverside
             Exception: to catch unknown errors during the exchange
         """
@@ -189,7 +193,7 @@ class SqlDatabase:  # pylint: disable=R0902
 
         consql.close()
 
-    def latest_datapoint(self):
+    def latest_datapoint(self) -> str:
         """Look up last entry in the database table.
 
         Returns:
