@@ -6,7 +6,7 @@ import os
 import syslog
 
 
-def cat(file_name):
+def cat(file_name: str) -> str:
     """Read a file (line-by-line) into a variable.
 
     Args:
@@ -22,7 +22,7 @@ def cat(file_name):
     return contents
 
 
-def syslog_trace(trace, logerr, out2console=False):
+def syslog_trace(trace: str, logerr: int, out2console: bool = False) -> None:
     """Log a (multi-line) message to syslog.
 
     Initialise with a call to

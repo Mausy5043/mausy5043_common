@@ -25,22 +25,22 @@ class SqlDatabase:  # pylint: disable=R0902
         debug=False,
     ):
         """Initialise database queue object."""
-        self.debug = debug
-        self.home = os.environ["HOME"]
-        self.version = 3.0
-        self.database = database
-        self.schema = schema
-        self.table = table
-        self.sql_insert = insert
-        self.sql_query = None
-        self.dataq = []
-        self.db_version = self._test_db_connection()
+        self.debug: bool = debug
+        self.home: str = os.environ["HOME"]
+        self.version: float = 3.0
+        self.database: str = database
+        self.schema: str = schema
+        self.table: str = table
+        self.sql_insert: str = insert
+        self.sql_query: str = None
+        self.dataq: list[dict] = []
+        self.db_version: str = self._test_db_connection()
 
-    def _test_db_connection(self):
+    def _test_db_connection(self) -> str:
         """Print the version of the database.
 
         Returns:
-            None
+            version of the database
         """
         consql = None
         try:
@@ -80,7 +80,7 @@ class SqlDatabase:  # pylint: disable=R0902
             raise
         return versql
 
-    def queue(self, data):
+    def queue(self, data: dict) -> None:
         """Append data to the queue for insertion.
 
         Args:
@@ -193,7 +193,7 @@ class SqlDatabase:  # pylint: disable=R0902
 
         consql.close()
 
-    def latest_datapoint(self):
+    def latest_datapoint(self) -> str:
         """Look up last entry in the database table.
 
         Returns:
