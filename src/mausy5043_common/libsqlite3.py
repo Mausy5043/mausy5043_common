@@ -97,7 +97,9 @@ class SqlDatabase:  # pylint: disable=R0902
             mf.syslog_trace("Data must be a dictionary!", syslog.LOG_CRIT, self.debug)
             raise TypeError
 
-    def insert(self, method="ignore", index="sample_time", aggregation="raw") -> None:
+    def insert(
+        self, method: str = "ignore", index: str = "sample_time", aggregation: str = "raw"
+    ) -> None:
         """Commit queued data to the database.
 
         Args:
