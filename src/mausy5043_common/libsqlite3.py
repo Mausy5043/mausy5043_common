@@ -19,9 +19,9 @@ class SqlDatabase:  # pylint: disable=R0902
     def __init__(
         self,
         database: str,
-        schema: str,
         table: str,
         insert: str,
+        schema: str = "",
         debug: bool = False,
     ) -> None:
         """Initialise database queue object."""
