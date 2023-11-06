@@ -18,13 +18,14 @@ class SqlDatabase:  # pylint: disable=R0902
 
     def __init__(
         self,
-        database=".local/databasefile.sqlite3",
-        schema=None,
-        table=None,
-        insert=None,
-        debug=False,
-    ):
+        database: str,
+        table: str,
+        insert: str,
+        schema: str = "",
+        debug: bool = False,
+    ) -> None:
         """Initialise database queue object."""
+
         self.debug: bool = debug
         self.home: str = os.environ["HOME"]
         self.version: float = 3.0
@@ -32,7 +33,7 @@ class SqlDatabase:  # pylint: disable=R0902
         self.schema: str = schema
         self.table: str = table
         self.sql_insert: str = insert
-        self.sql_query: str = None
+        self.sql_query: str = ""
         self.dataq: list[dict] = []
         self.db_version: str = self._test_db_connection()
 
@@ -96,7 +97,7 @@ class SqlDatabase:  # pylint: disable=R0902
             mf.syslog_trace("Data must be a dictionary!", syslog.LOG_CRIT, self.debug)
             raise TypeError
 
-    def insert(self, method="ignore", index="sample_time", aggregation="raw"):
+    def insert(self, method: str = "ignore", index: str = "sample_time") -> None:
         """Commit queued data to the database.
 
         Args:
@@ -105,10 +106,6 @@ class SqlDatabase:  # pylint: disable=R0902
                             'ignore' (database will not be changed) or
                             'replace' (existing data will be removed and new data inserted).
             index (str):    name of the field to be used as the index.
-            aggregation (str): specifies how to treat the data before inserting.
-                               "raw" will insert the data as is
-                               "avg" will insert averaged data. The index is not averaged,
-                               instead the last value is used.
 
         Returns:
             None
@@ -119,7 +116,7 @@ class SqlDatabase:  # pylint: disable=R0902
             Exception: to catch unknown errors during the exchange
         """
         consql = None
-        if not self.insert:
+        if self.sql_insert == "":
             raise ValueError("No instruction provided")
 
         try:

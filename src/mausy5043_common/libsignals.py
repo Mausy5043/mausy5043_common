@@ -12,12 +12,12 @@ class GracefulKiller:  # pylint: disable=R0903
 
     kill_now = False
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Set-up signals to intercept."""
         signal.signal(signal.SIGINT, self.exit_gracefully)
         signal.signal(signal.SIGTERM, self.exit_gracefully)
 
-    def exit_gracefully(self, signum, frame):  # pylint: disable=W0613
+    def exit_gracefully(self, signum, frame) -> None:  # pylint: disable=W0613
         """Intercept signals and set the state appropriately.
 
         Args:
