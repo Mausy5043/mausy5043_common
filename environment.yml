@@ -9,6 +9,7 @@ dependencies:
   - python=3.11
   - numpy
   - pandas
+  - pandas-stubs
   - pip
   # Not on conda channels:
   - pip:
