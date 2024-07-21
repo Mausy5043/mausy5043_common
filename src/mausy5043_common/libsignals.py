@@ -5,7 +5,8 @@
 # TODO: migrate to https://pypi.org/project/GracefulKiller/
 
 import signal
-
+import warnings
+warnings.warn("This module is deprecated. Use https://pypi.org/project/GracefulKiller/ instead.")
 
 class GracefulKiller:  # pylint: disable=R0903
     """A class to intercept kill signals."""
