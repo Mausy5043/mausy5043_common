@@ -1,5 +1,5 @@
 # When making changes to this file update requirements.txt also !!
-# Usage: conda -v env update -n mausy5043-common --file environment.yml
+# Usage: conda -v env update -n mausy5043-common --file environment.yml; pre-commit run --all-files
 
 channels:
   - conda-forge
@@ -10,6 +10,7 @@ dependencies:
   - numpy
   - pandas
   - pandas-stubs
+  - pre-commit
   - pip
   # Not on conda channels:
   - pip:
