@@ -45,3 +45,7 @@ dependencies = [
 
 # [tool.setuptools.package-data]
 # "mausy5043-common" = ["py.typed"]
+
+[tool.black]
+line-length = 98
+target-version = ["py39", "py310", "py311", "py312"]
