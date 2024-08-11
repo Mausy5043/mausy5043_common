@@ -1,4 +1,4 @@
-# pyproject.toml
+# Project: mausy5043-common
 
 # Hatchling  https://packaging.python.org/en/latest/key_projects/#hatch
 
@@ -45,6 +45,9 @@ dependencies = [
 
 # [tool.setuptools.package-data]
 # "mausy5043-common" = ["py.typed"]
+
+[tool.bandit]
+skips = []
 
 [tool.black]
 line-length = 98
