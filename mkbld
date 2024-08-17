@@ -21,8 +21,9 @@ build_app(){
     ### build package
     echo
     echo "Building..."
-    rm dist/*
-    python3 -m build
+    rm -r dist/*
+    rm -r ./*.egg-info
+    python3 -m build --outdir ./dist # not needed by default: --sdist --wheel
 }
 
 test_app() {
@@ -31,7 +32,7 @@ test_app() {
     python3 -m twine upload --repository testpypi dist/*
     echo ""
     echo "To test installing this package use:"
-    echo "python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps --upgrade ${PACKAGE_NAME}"
+    echo "python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ --no-deps --upgrade ${PACKAGE_NAME}"
 }
 
 dist_app() {

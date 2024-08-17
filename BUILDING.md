@@ -3,10 +3,10 @@
 ## Versionnumbers
 
 We try to follow [semantic versioning](semver.org).
-* We don't have `0` MINOR or PATCH versionnumbers. Patterns `x.0.z` and `x.y.0` do not exist. 
+* We don't have `0` MINOR or PATCH versionnumbers. Patterns `x.0.z` and `x.y.0` do not exist.
 * Testing versions are identified by odd-numbered MINOR versions
 * Stable/production versions are identified by even-numbered MINOR versions
-* MAJOR versions increase only when significant changes are made 
+* MAJOR versions increase only when significant changes are made
 
 ## Building the package for testing
 
@@ -16,7 +16,7 @@ Preferably changes are done on a separate branch.
 1. Make the necessary changes...
 1. In `./pyproject.toml` change the versionnumber under `[project]/version`
    * For testing we change the MINOR version to the next **odd** value
-   * The first PATCH version always starts on x.y.1 and increases by +1 with every new build 
+   * The first PATCH version always starts on x.y.1 and increases by +1 with every new build
    * Builds with the same versionnumber can't be uploaded to PyPi, so it's not like we have a choice
 1. Run `./mkbld -b`
 1. Run `./mkbld -t`  *(installation instructions are displayed on the terminal after the upload)*
@@ -45,7 +45,7 @@ To distribute a new production version the package must be built and uploaded to
 1. After succesfull testing of the distribution package create a new tag on the `master` branch
 
 ## Available commands for package building
-`./mkbld --build|-b` builds the distribution files   
-`./mkbld --dist|-d` uploads the distribution files to PyPi   
-`./mkbld --test|-t` uploads the dictribution files to TestPyPi   
+`./mkbld --build|-b` builds the distribution files
+`./mkbld --dist|-d` uploads the distribution files to PyPi
+`./mkbld --test|-t` uploads the dictribution files to TestPyPi
 `./mkbld --discard` **discards all changes to the local copy** of the repo and pulls the current state of the repo from GitHub.
