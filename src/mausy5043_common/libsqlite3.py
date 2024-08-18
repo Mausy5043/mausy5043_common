@@ -220,7 +220,7 @@ class SqlDatabase:  # pylint: disable=R0902
         try:
             sql_command = "SELECT MAX(sample_epoch) from ?;"
             sql_params = (self.table,)
-            cursor.execute(sql_command, self_params)
+            cursor.execute(sql_command, sql_params)
             max_epoch = cursor.fetchone()
             human_epoch = time.localtime(max_epoch[0])
             cursor.close()
