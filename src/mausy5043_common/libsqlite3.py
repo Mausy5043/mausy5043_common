@@ -148,7 +148,9 @@ class SqlDatabase:  # pylint: disable=R0902
                     mf.syslog_trace("Duplicate entry. Not adding to database.", False, self.debug)
                 if method == "replace":
                     element_time = element[f"{df_idx}"]
+                    # fmt: off
                     sql_command = f'DELETE FROM {self.table} WHERE {df_idx} = "{element_time}";'  # nosec B608
+                    # fmt: on
                     cursor = consql.cursor()
                     try:
                         cursor.execute(sql_command)
