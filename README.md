@@ -29,5 +29,4 @@ python3 -m pip install mausy5043-common
 `wet_bulb_temperature(temperature, relative_humidity)` : Calculate the wet bulb temperature of the air given T [degC] and RH [%].
 
 ## Classes provided
-`GracefulKiller` : A simple version of [this one](https://pypi.org/project/GracefulKiller/).
 `SqlDatabase` : A class to interact with SQLite3 databases.
