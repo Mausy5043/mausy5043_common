@@ -148,10 +148,15 @@ class SqlDatabase:  # pylint: disable=R0902
                     mf.syslog_trace("Duplicate entry. Not adding to database.", False, self.debug)
                 if method == "replace":
                     element_time = element[f"{df_idx}"]
-                    sql_command = f'DELETE FROM {self.table} WHERE {df_idx} = "{element_time}";'
+                    sql_command = 'DELETE FROM ? WHERE ? = "?";'
+                    sql_params = (
+                        self.table,
+                        df_idx,
+                        element_time,
+                    )
                     cursor = consql.cursor()
                     try:
-                        cursor.execute(sql_command)
+                        cursor.execute(sql_command, sql_params)
                         cursor.fetchone()
                         cursor.close()
                         consql.commit()
@@ -213,7 +218,9 @@ class SqlDatabase:  # pylint: disable=R0902
             raise
         cursor = consql.cursor()
         try:
-            cursor.execute(f"SELECT MAX(sample_epoch) from {self.table};")
+            sql_command = "SELECT MAX(sample_epoch) from ?;"
+            sql_params = (self.table,)
+            cursor.execute(sql_command, self_params)
             max_epoch = cursor.fetchone()
             human_epoch = time.localtime(max_epoch[0])
             cursor.close()
