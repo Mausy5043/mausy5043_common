@@ -9,7 +9,7 @@ build-backend = "hatchling.build"
 [project]
 name = "mausy5043-common"
 # version = "1.8.1"  # latest production version
-version = "1.9.1" # latest test version
+version = "1.9.8" # latest test version  (1.6.8
 description = "Common python functions"
 readme = "README.md"
 requires-python = ">=3.9"
