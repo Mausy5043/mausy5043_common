@@ -1,3 +1,5 @@
+# When making changes to this file: also update environment.yml and pyproject.toml !!
+
 numpy>=2.0.1
 pandas>=2.2.2
 pyarrow>=17.0.0

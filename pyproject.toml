@@ -8,8 +8,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mausy5043-common"
-# version = "1.8.1"  # latest production version
-version = "1.9.8" # latest test version  (1.6.8
+#version = "1.8.2"  # latest production version
+version = "1.9.11" # latest test version  (1.6.8
 description = "Common python functions"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -32,8 +32,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "numpy",
-    "pandas",
+    "numpy>=2.0.1",
+    "pandas>=2.2.2",
+    "pyarrow>=17.0.0",
 ]
 
 [tool.hatch.build.targets.wheel.force-include]
