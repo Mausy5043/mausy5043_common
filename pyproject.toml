@@ -12,7 +12,7 @@ name = "mausy5043-common"
 version = "1.9.11" # latest test version  (1.6.8
 description = "Common python functions"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 license = "MIT"
 authors = [
   { name="Mausy5043" },
@@ -70,6 +70,10 @@ ignore = [
 # line break before binary: is against policy.
     "W503",
 ]
+
+[tool.isort]
+profile = "black"
+py_version="auto"
 
 [tool.mypy]
 warn_unused_configs = true
