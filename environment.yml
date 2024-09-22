@@ -10,12 +10,14 @@ channels:
 
 dependencies:
   - python=3.12
-  - numpy>=2.0.1
-  - pandas>=2.2.2
-  - pandas-stubs
-  - pre-commit
-  - pyarrow>=17.0.0
   - pip
-  # Not on conda channels:
-  - pip:
-      - pylint
+  # imported deps
+  - numpy>=2.0.1
+  - pandas==2.2.2
+  - pyarrow==17.0.0
+
+  # dev deps
+  - pandas-stubs
+  - pip
+  - pipdeptree
+  - pre-commit
