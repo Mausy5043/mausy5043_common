@@ -1,7 +1,10 @@
+
+[![License](https://img.shields.io/github/license/mausy5043/mausy5043-common)](LICENSE)
 [![PyPI version](https://img.shields.io/pypi/v/mausy5043-common.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/mausy5043-common)
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/mausy5043-common.svg?logo=python&logoColor=FFE873)](https://pypi.org/project/mausy5043-common)
 [![PyPI downloads](https://img.shields.io/pypi/dm/mausy5043-common.svg)](https://pypistats.org/packages/mausy5043-common)
 [![Code style: Black](https://img.shields.io/badge/code%20style-Black-000000.svg)](https://github.com/psf/black)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Mausy5043/mausy5043-common/devel.svg)](https://results.pre-commit.ci/latest/github/Mausy5043/mausy5043-common/devel)
 
 # mausy5043-common
 
@@ -30,3 +33,6 @@ python3 -m pip install mausy5043-common
 
 ## Classes provided
 `SqlDatabase` : A class to interact with SQLite3 databases.
+
+## Disclaimer & License
+As of September 2024 `mausy5043-common` is distributed under [AGPL-3.0-or-later](LICENSE).
