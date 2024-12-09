@@ -32,9 +32,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "numpy>=2.0.1",
-    "pandas>=2.2.2",
-    "pyarrow>=17.0.0",
+    "numpy==2.0.1",
+    "pandas==2.2.2",
+    "pyarrow==17.0.0",
 ]
 
 [tool.hatch.build.targets.wheel.force-include]
