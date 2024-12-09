@@ -4,9 +4,10 @@ version: 2
 updates:
   - package-ecosystem: 'pip'
     directory: '/'
-    target-branch: 'devel'
+    target-branch: 'master'
     schedule:
       interval: 'weekly'
     allow:
       # Allow both direct and indirect updates for all packages
       - dependency-type: 'all'
+      
