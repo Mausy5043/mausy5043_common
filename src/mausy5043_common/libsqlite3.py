@@ -65,7 +65,7 @@ class SqlDatabase:  # pylint: disable=R0902
         cursor = consql.cursor()
         try:
             cursor.execute("SELECT sqlite_version();")
-            versql = cursor.fetchone()
+            versql: str = str(cursor.fetchone())
             cursor.close()
             consql.commit()
             consql.close()
