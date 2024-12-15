@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# mausy5043-common
+# Copyright (C) 2024  Maurice (mausy5043) Hendrix
+# AGPL-3.0-or-later  - see LICENSE
+
 """Provide a generic class to interact with an sqlite3 database."""
 
 import os
@@ -61,7 +65,7 @@ class SqlDatabase:  # pylint: disable=R0902
         cursor = consql.cursor()
         try:
             cursor.execute("SELECT sqlite_version();")
-            versql = cursor.fetchone()
+            versql: str = str(cursor.fetchone())
             cursor.close()
             consql.commit()
             consql.close()
@@ -148,7 +152,9 @@ class SqlDatabase:  # pylint: disable=R0902
                     mf.syslog_trace("Duplicate entry. Not adding to database.", False, self.debug)
                 if method == "replace":
                     element_time = element[f"{df_idx}"]
-                    sql_command = f'DELETE FROM {self.table} WHERE {df_idx} = "{element_time}";'
+                    # fmt: off
+                    sql_command = f'DELETE FROM {self.table} WHERE {df_idx} = "{element_time}";'  # nosec B608
+                    # fmt: on
                     cursor = consql.cursor()
                     try:
                         cursor.execute(sql_command)
@@ -213,7 +219,8 @@ class SqlDatabase:  # pylint: disable=R0902
             raise
         cursor = consql.cursor()
         try:
-            cursor.execute(f"SELECT MAX(sample_epoch) from {self.table};")
+            sql_command = f"SELECT MAX(sample_epoch) from {self.table};"  # nosec B608
+            cursor.execute(sql_command)
             max_epoch = cursor.fetchone()
             human_epoch = time.localtime(max_epoch[0])
             cursor.close()

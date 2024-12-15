@@ -8,11 +8,11 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mausy5043-common"
-version = "1.8.1"  # latest production version
-# version = "1.5.4" # latest test version
+#version = "1.8.2"  # latest production version
+version = "1.9.11" # latest test version  (1.6.8
 description = "Common python functions"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 license = "MIT"
 authors = [
   { name="Mausy5043" },
@@ -32,8 +32,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "numpy",
-    "pandas",
+    "numpy==2.2.0",
+    "pandas==2.2.3",
+    "pyarrow==18.1.0",
 ]
 
 [tool.hatch.build.targets.wheel.force-include]
@@ -50,27 +51,38 @@ dependencies = [
 max_line_length = 98
 in-place = true
 recursive = true
-aggressive = 1
+aggressive = 2
+ignore = [
+    # whitespace before ':': is enforced by black
+    "E203"
+    ]
 
 [tool.bandit]
 skips = []
 
 [tool.black]
 line-length = 98
-target-version = ["py39", "py310", "py311", "py312"]
+target-version = ["py39", "py310", "py311", "py312", "py313"]
+
+[tool.isort]
+profile = "black"
+py_version="auto"
 
 [tool.flake8]
 max_line_length = 98
 ignore = [
-# function too complex: is what we do ;-)
+    # function too complex: is what we do ;-)
     "C901",
- # line too long: is checked by pylint
+    # whitespace before ':': is enforced by black
+    "E203",
+    # line too long: is checked by pylint
     "E501",
 # line break before binary: is against policy.
     "W503",
-]
+    ]
 
 [tool.mypy]
+warn_return_any = true
 warn_unused_configs = true
 warn_redundant_casts = true
 warn_unused_ignores = true
@@ -80,10 +92,13 @@ disallow_subclassing_any = true
 disallow_untyped_decorators = true
 disallow_untyped_calls = true
 no_implicit_reexport = true
+extra_checks = true
 
 [tool.pydocstyle]
 inherit = false
-convention = 'google'
-match = '.*\\.py'
-add-ignore = 'D'
-extra_checks = true
+convention = "google"
+match = ".*\\.py"
+add-ignore = "D"
+
+
+# pylint is controlled by .pylintrc

@@ -1,4 +1,4 @@
-# When making changes to this file update requirements.txt also !!
+# When making changes to this file also update requirements.txt and pyproject.toml !!
 # Usage:
 # conda -v env update --file environment.yml; pre-commit run --all-files; pycheck
 
@@ -9,12 +9,15 @@ channels:
   - defaults
 
 dependencies:
-  - python=3.11
-  - numpy
-  - pandas
-  - pandas-stubs
-  - pre-commit
+  - python=3.12
   - pip
-  # Not on conda channels:
-  - pip:
-      - pylint
+  # imported deps
+  - numpy==2.2.0
+  - pandas==2.2.3
+  - pyarrow==18.1.0
+
+  # dev deps
+  - pandas-stubs
+  - pip
+  - pipdeptree
+  - pre-commit
