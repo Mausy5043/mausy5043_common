@@ -106,7 +106,7 @@ fix = true
 indent-width = 4
 line-length = 98
 output-format = "concise"
-include = ["pyproject.toml", "bin/**/*.py"]
+include = ["pyproject.toml", "src/**/*.py"]
 
 [tool.ruff.format]
 indent-style = "space"
