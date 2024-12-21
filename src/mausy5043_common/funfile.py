@@ -21,7 +21,7 @@ def cat(file_name: str) -> str:
     """
     contents = ""
     if os.path.isfile(file_name):
-        with open(file_name, "r", encoding="utf-8") as file_stream:
+        with open(file_name, encoding="utf-8") as file_stream:
             contents = file_stream.read().strip("\n")
     return contents
 
