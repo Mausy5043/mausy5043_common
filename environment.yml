@@ -12,7 +12,7 @@ dependencies:
   - python=3.12
   - pip
   # imported deps
-  - numpy==2.2.0
+  - numpy==2.2.1
   - pandas==2.2.3
   - pyarrow==18.1.0
 
