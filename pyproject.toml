@@ -8,8 +8,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mausy5043-common"
-# version = "1.10.1"  # latest production version
-version = "1.11.2" # latest test version
+version = "1.12.1"  # latest production version
+# version = "1.11.2" # latest test version
 description = "Common python functions"
 readme = "README.md"
 requires-python = ">=3.11"
