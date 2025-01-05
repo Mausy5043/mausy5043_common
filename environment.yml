@@ -18,6 +18,5 @@ dependencies:
 
   # dev deps
   - pandas-stubs
-  - pip
   - pipdeptree
   - pre-commit
