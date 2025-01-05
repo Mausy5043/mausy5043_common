@@ -1,20 +1,33 @@
 #!/usr/bin/env python3
 
 # mausy5043-common
-# Copyright (C) 2024  Maurice (mausy5043) Hendrix
+# Copyright (C) 2025  Maurice (mausy5043) Hendrix
 # AGPL-3.0-or-later  - see LICENSE
 
 """Provide a generic class to interact with an sqlite3 database."""
 
+import logging
+import logging.handlers
 import os
 import sqlite3 as s3
-import syslog
 import time
-import traceback
 
 import pandas as pd
 
-from . import funfile as mf
+DT_FORMAT = "%Y-%m-%d %H:%M:%S"
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(module)s.%(funcName)s [%(levelname)s] - %(message)s",
+    datefmt=DT_FORMAT,
+    handlers=[
+        logging.handlers.SysLogHandler(
+            address="/dev/log",
+            facility=logging.handlers.SysLogHandler.LOG_DAEMON,
+        )
+    ],
+)
+LOGGER: logging.Logger = logging.getLogger(__name__)
 
 
 class SqlDatabase:  # pylint: disable=R0902
@@ -29,7 +42,6 @@ class SqlDatabase:  # pylint: disable=R0902
         debug: bool = False,
     ) -> None:
         """Initialise database queue object."""
-
         self.debug: bool = debug
         self.home: str = os.environ["HOME"]
         self.version: float = 3.0
@@ -51,16 +63,14 @@ class SqlDatabase:  # pylint: disable=R0902
         try:
             consql = s3.connect(self.database, timeout=9000)
         except s3.Error as her:
-            mf.syslog_trace(
-                # pylint: disable-next=C0301
-                f"Unexpected error of type {type(her).__name__} when connecting to server.",
-                syslog.LOG_CRIT,
-                self.debug,
+            LOGGER.critical(
+                f"Unexpected error of type {
+                    type(her).__name__} when connecting to server."
             )
-            mf.syslog_trace(traceback.format_exc(), syslog.LOG_CRIT, self.debug)
+            # LOGGER.info(traceback.format_exc())   # raise already does this
             if consql:  # attempt to close connection to sqlite3 server
                 consql.close()
-                mf.syslog_trace(" ** Closed SQLite3 connection. **", False, self.debug)
+                LOGGER.debug(" ** Closed SQLite3 connection. **")
             raise
         cursor: s3.Cursor = consql.cursor()
         try:
@@ -69,19 +79,11 @@ class SqlDatabase:  # pylint: disable=R0902
             cursor.close()
             consql.commit()
             consql.close()
-            mf.syslog_trace(f"Attached to SQLite3 server: {versql}", syslog.LOG_INFO, self.debug)
-            mf.syslog_trace(
-                f"Using DB file             : {self.table}@{self.database}",
-                syslog.LOG_INFO,
-                self.debug,
-            )
+            LOGGER.info(f"Attached to SQLite3 server: {versql}")
+            LOGGER.info(f"Using DB file             : {self.table}@{self.database}")
         except s3.Error as her:
-            mf.syslog_trace(
-                f"Unexpected SQLite3 error of type {type(her).__name__} during test.",
-                syslog.LOG_CRIT,
-                self.debug,
-            )
-            mf.syslog_trace(traceback.format_exc(), syslog.LOG_CRIT, self.debug)
+            LOGGER.critical(f"Unexpected SQLite3 error of type {type(her).__name__} during test.")
+            # LOGGER.info(traceback.format_exc())   # raise already does this
             raise
         return versql
 
@@ -96,9 +98,9 @@ class SqlDatabase:  # pylint: disable=R0902
         """
         if isinstance(data, dict):
             self.dataq.append(data)
-            mf.syslog_trace(f"Queued : {data}", False, self.debug)
+            LOGGER.debug(f"Queued : {data}")
         else:
-            mf.syslog_trace("Data must be a dictionary!", syslog.LOG_CRIT, self.debug)
+            # LOGGER.critical("Data must be a dictionary!")   # raise already does this
             raise TypeError("Data must be a dictionary")
 
     def insert(self, method: str = "ignore", index: str = "sample_time") -> None:
@@ -126,16 +128,14 @@ class SqlDatabase:  # pylint: disable=R0902
         try:
             consql = s3.connect(self.database, timeout=9000)
         except s3.Error as her:
-            mf.syslog_trace(
-                # pylint: disable-next=C0301
-                f"Unexpected error of type {type(her).__name__} when connecting to server.",
-                syslog.LOG_CRIT,
-                self.debug,
+            LOGGER.critical(
+                f"Unexpected error of type {
+                    type(her).__name__} when connecting to server."
             )
-            mf.syslog_trace(traceback.format_exc(), syslog.LOG_CRIT, self.debug)
+            # LOGGER.info(traceback.format_exc())    # raise already does this
             if consql:  # attempt to close connection to sqlite3 server
                 consql.close()
-                mf.syslog_trace(" ** Closed SQLite3 connection. **", False, self.debug)
+                LOGGER.debug(" ** Closed SQLite3 connection. **")
             raise
 
         while self.dataq:
@@ -144,12 +144,12 @@ class SqlDatabase:  # pylint: disable=R0902
             df = pd.DataFrame(element, index=[df_idx])
             try:
                 df.to_sql(name=self.table, con=consql, if_exists="append", index=False)
-                mf.syslog_trace(f"Inserted : \n{df}\n", False, self.debug)
+                LOGGER.debug(f"Inserted : \n{df}\n")
             except s3.IntegrityError:
                 # probably "sqlite3.IntegrityError: UNIQUE constraint failed".
                 # this can be passed
                 if method == "ignore":
-                    mf.syslog_trace("Duplicate entry. Not adding to database.", False, self.debug)
+                    LOGGER.debug("Duplicate entry. Not adding to database.")
                 if method == "replace":
                     element_time = element[f"{df_idx}"]
                     # fmt: off
@@ -162,35 +162,32 @@ class SqlDatabase:  # pylint: disable=R0902
                         cursor.close()
                         consql.commit()
                     except s3.IntegrityError:
-                        pass
                         # probably "sqlite3.IntegrityError: UNIQUE constraint failed".
                         # this can be passed
+                        LOGGER.debug("Ignoring: IntegrityError.")
+                        pass
                     except s3.Error as her:
-                        mf.syslog_trace(
-                            # pylint: disable-next=C0301
-                            f"Error of type {type(her).__name__} when commiting to server.",
-                            syslog.LOG_ERR,
-                            self.debug,
+                        LOGGER.critical(
+                            f"Error of type {
+                                type(her).__name__} when commiting to server."
                         )
-                        mf.syslog_trace(traceback.format_exc(), syslog.LOG_ERR, self.debug)
+                        # LOGGER.info(traceback.format_exc())     # raise already does this
                         raise
                     df.to_sql(name=self.table, con=consql, if_exists="append", index=False)
-                    mf.syslog_trace(f"Replaced : \n{df}\n", False, self.debug)
+                    LOGGER.debug(f"Replaced : \n{df}\n")
             except s3.Error as her:
-                mf.syslog_trace(
-                    f"SQLite3 error of type {type(her).__name__} when commiting to server.",
-                    syslog.LOG_ERR,
-                    self.debug,
+                LOGGER.critical(
+                    f"SQLite3 error of type {
+                        type(her).__name__} when commiting to server."
                 )
-                mf.syslog_trace(traceback.format_exc(), syslog.LOG_ERR, self.debug)
+                # LOGGER.info(traceback.format_exc())     # raise already does this
                 raise
             except Exception as her:
-                mf.syslog_trace(
-                    f"Unexpected error of type {type(her).__name__} !",
-                    syslog.LOG_ERR,
-                    self.debug,
+                LOGGER.critical(
+                    f"Unexpected error of type {
+                        type(her).__name__} when commiting to server."
                 )
-                mf.syslog_trace(traceback.format_exc(), syslog.LOG_ERR, self.debug)
+                # LOGGER.info(traceback.format_exc())     # raise already does this
                 raise
             self.dataq.pop(0)
 
@@ -206,16 +203,14 @@ class SqlDatabase:  # pylint: disable=R0902
         try:
             consql = s3.connect(self.database, timeout=9000)
         except s3.Error as her:
-            mf.syslog_trace(
-                # pylint: disable-next=C0301
-                f"Unexpected error of type {type(her).__name__} when connecting to server.",
-                syslog.LOG_CRIT,
-                self.debug,
+            LOGGER.critical(
+                f"Unexpected error of type {
+                    type(her).__name__} when connecting to server."
             )
-            mf.syslog_trace(traceback.format_exc(), syslog.LOG_CRIT, self.debug)
+            # LOGGER.info(traceback.format_exc())     # raise already does this
             if consql:  # attempt to close connection to sqlite3 server
                 consql.close()
-                mf.syslog_trace(" ** Closed SQLite3 connection. **", False, self.debug)
+                LOGGER.debug(" ** Closed SQLite3 connection. **")
             raise
         cursor: s3.Cursor = consql.cursor()
         try:
@@ -226,18 +221,12 @@ class SqlDatabase:  # pylint: disable=R0902
             cursor.close()
             consql.commit()
             consql.close()
-            mf.syslog_trace(
+            LOGGER.debug(
                 f"Latest datapoint in {self.table}: "
-                f"{max_epoch[0]} = {time.strftime('%Y-%m-%d %H:%M:%S', human_epoch)}",
-                False,
-                self.debug,
+                f"{max_epoch[0]} = {time.strftime('%Y-%m-%d %H:%M:%S', human_epoch)}"
             )
         except s3.Error as her:
-            mf.syslog_trace(
-                f"Unexpected SQLite3 error of type {type(her).__name__} during test.",
-                syslog.LOG_CRIT,
-                self.debug,
-            )
-            mf.syslog_trace(traceback.format_exc(), syslog.LOG_CRIT, self.debug)
+            LOGGER.critical(f"Unexpected SQLite3 error of type {type(her).__name__} during test.")
+            # LOGGER.info(traceback.format_exc())     # raise already does this
             raise
         return time.strftime("%Y-%m-%d %H:%M:%S", human_epoch)
