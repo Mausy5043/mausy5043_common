@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 
 # mausy5043-common
-# Copyright (C) 2024  Maurice (mausy5043) Hendrix
+# Copyright (C) 2025  Maurice (mausy5043) Hendrix
 # AGPL-3.0-or-later  - see LICENSE
 
 """Provide file operation functions."""
 
 import os
 import syslog
+import warnings
 
 
 def cat(file_name: str) -> str:
@@ -40,6 +41,11 @@ def syslog_trace(trace: str, logerr: int, out2console: bool = False) -> None:
     Returns:
         None
     """
+    warnings.warn(
+        "This function is deprecated. Use logging instead.",
+        category=DeprecationWarning,
+        stacklevel=2,
+    )
     log_lines: list[str] = trace.split("\n")
     for line in log_lines:
         if line and logerr:
