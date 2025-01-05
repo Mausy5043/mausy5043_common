@@ -24,12 +24,12 @@ def moisture(temperature: float, relative_humidity: float, pressure: float) -> n
     pascal: float = pressure * 100
     rho: float = (287.04 * kelvin) / pascal
 
-    es = 611.2 * np.exp(17.67 * (kelvin - 273.15) / (kelvin - 29.65))
-    rvs = 0.622 * es / (pascal - es)
-    rv = relative_humidity / 100.0 * rvs
-    qv = rv / (1 + rv)
-    moistair = qv * rho * 1000  # g water per m3 air
-    return np.array(moistair)
+    es: float = 611.2 * np.exp(17.67 * (kelvin - 273.15) / (kelvin - 29.65))
+    rvs: float = 0.622 * es / (pascal - es)
+    rv: float = relative_humidity / 100.0 * rvs
+    qv: float = rv / (1 + rv)
+    moistair: float = qv * rho * 1000  # g water per m3 air
+    return np.array([moistair])
 
 
 def wet_bulb_temperature(temperature: float, relative_humidity: float) -> float:

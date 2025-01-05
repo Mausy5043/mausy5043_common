@@ -47,7 +47,7 @@ class SqlDatabase:  # pylint: disable=R0902
         Returns:
             version of the database
         """
-        consql = None
+        consql: s3.Connection | None = None
         try:
             consql = s3.connect(self.database, timeout=9000)
         except s3.Error as her:
@@ -62,7 +62,7 @@ class SqlDatabase:  # pylint: disable=R0902
                 consql.close()
                 mf.syslog_trace(" ** Closed SQLite3 connection. **", False, self.debug)
             raise
-        cursor = consql.cursor()
+        cursor: s3.Cursor = consql.cursor()
         try:
             cursor.execute("SELECT sqlite_version();")
             versql: str = str(cursor.fetchone())
@@ -99,7 +99,7 @@ class SqlDatabase:  # pylint: disable=R0902
             mf.syslog_trace(f"Queued : {data}", False, self.debug)
         else:
             mf.syslog_trace("Data must be a dictionary!", syslog.LOG_CRIT, self.debug)
-            raise TypeError
+            raise TypeError("Data must be a dictionary")
 
     def insert(self, method: str = "ignore", index: str = "sample_time") -> None:
         """Commit queued data to the database.
@@ -119,7 +119,7 @@ class SqlDatabase:  # pylint: disable=R0902
             sqlite3.Error: when commit fails serverside
             Exception: to catch unknown errors during the exchange
         """
-        consql = None
+        consql: s3.Connection | None = None
         if self.sql_insert == "":
             raise ValueError("No instruction provided")
 
@@ -202,7 +202,7 @@ class SqlDatabase:  # pylint: disable=R0902
         Returns:
             date and time of the youngest entry in the table
         """
-        consql = None
+        consql: s3.Connection | None = None
         try:
             consql = s3.connect(self.database, timeout=9000)
         except s3.Error as her:
@@ -217,7 +217,7 @@ class SqlDatabase:  # pylint: disable=R0902
                 consql.close()
                 mf.syslog_trace(" ** Closed SQLite3 connection. **", False, self.debug)
             raise
-        cursor = consql.cursor()
+        cursor: s3.Cursor = consql.cursor()
         try:
             sql_command = f"SELECT MAX(sample_epoch) from {self.table};"  # nosec B608
             cursor.execute(sql_command)
