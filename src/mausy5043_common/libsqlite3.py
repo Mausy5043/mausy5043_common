@@ -64,8 +64,7 @@ class SqlDatabase:  # pylint: disable=R0902
             consql = s3.connect(self.database, timeout=9000)
         except s3.Error as her:
             LOGGER.critical(
-                f"Unexpected error of type {
-                    type(her).__name__} when connecting to server."
+                f"Unexpected error of type {type(her).__name__} when connecting to server."
             )
             # LOGGER.info(traceback.format_exc())   # raise already does this
             if consql:  # attempt to close connection to sqlite3 server
@@ -129,8 +128,7 @@ class SqlDatabase:  # pylint: disable=R0902
             consql = s3.connect(self.database, timeout=9000)
         except s3.Error as her:
             LOGGER.critical(
-                f"Unexpected error of type {
-                    type(her).__name__} when connecting to server."
+                f"Unexpected error of type {type(her).__name__} when connecting to server."
             )
             # LOGGER.info(traceback.format_exc())    # raise already does this
             if consql:  # attempt to close connection to sqlite3 server
@@ -168,8 +166,7 @@ class SqlDatabase:  # pylint: disable=R0902
                         pass
                     except s3.Error as her:
                         LOGGER.critical(
-                            f"Error of type {
-                                type(her).__name__} when commiting to server."
+                            f"Error of type {type(her).__name__} when commiting to server."
                         )
                         # LOGGER.info(traceback.format_exc())     # raise already does this
                         raise
@@ -177,15 +174,13 @@ class SqlDatabase:  # pylint: disable=R0902
                     LOGGER.debug(f"Replaced : \n{df}\n")
             except s3.Error as her:
                 LOGGER.critical(
-                    f"SQLite3 error of type {
-                        type(her).__name__} when commiting to server."
+                    f"SQLite3 error of type {type(her).__name__} when commiting to server."
                 )
                 # LOGGER.info(traceback.format_exc())     # raise already does this
                 raise
             except Exception as her:
                 LOGGER.critical(
-                    f"Unexpected error of type {
-                        type(her).__name__} when commiting to server."
+                    f"Unexpected error of type {type(her).__name__} when commiting to server."
                 )
                 # LOGGER.info(traceback.format_exc())     # raise already does this
                 raise
@@ -204,8 +199,7 @@ class SqlDatabase:  # pylint: disable=R0902
             consql = s3.connect(self.database, timeout=9000)
         except s3.Error as her:
             LOGGER.critical(
-                f"Unexpected error of type {
-                    type(her).__name__} when connecting to server."
+                f"Unexpected error of type {type(her).__name__} when connecting to server."
             )
             # LOGGER.info(traceback.format_exc())     # raise already does this
             if consql:  # attempt to close connection to sqlite3 server
