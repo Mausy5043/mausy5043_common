@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # mausy5043-common
-# Copyright (C) 2024  Maurice (mausy5043) Hendrix
+# Copyright (C) 2025  Maurice (mausy5043) Hendrix
 # AGPL-3.0-or-later  - see LICENSE
 
 """Provide various meteorological conversions."""

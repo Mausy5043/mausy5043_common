@@ -27,7 +27,6 @@ python3 -m pip install mausy5043-common
 
 ## Functions provided
 `cat(filename)` : Read a file into a variable.
-`syslog_trace(trace, logerr, out2console)` : Log messages to console and/or system log.
 `moisture(temperature, relative_humidity, pressure)` : Calculate the moisture content of air given T [degC], RH [%] and P [hPa].
 `wet_bulb_temperature(temperature, relative_humidity)` : Calculate the wet bulb temperature of the air given T [degC] and RH [%].
 
